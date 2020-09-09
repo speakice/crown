@@ -1,0 +1,122 @@
+.Todo {
+  display: flex;
+  height: 100%;
+  .leftList {
+    height: 100%;
+  }
+
+  .content {
+    flex: 1;
+    .inputSearch {
+      :global {
+        .ant-input-search-button {
+          padding: 0;
+          border: none;
+        }
+      }
+    }
+
+    .title {
+      height: 45px;
+      line-height: 45px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .columns {
+      height: calc(100% - 100px);
+      display: flex;
+      justify-content: space-around;
+      min-height: 300px;
+    }
+    .empty {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .emptyWord {
+        color: #bfbfbf;
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
+.SecondList {
+  width: 258px;
+  min-width: 258px;
+  height: 100%;
+  padding-bottom: 36px;
+  background-color: #eee;
+  position: relative;
+  .search {
+    display: flex;
+    padding: 16px;
+    align-items: center;
+    border-bottom: 1px solid #e2e2e2;
+  }
+  .top {
+    position: relative;
+    &:before {
+      content: '';
+      height: 0;
+      color: white;
+      border: 6px solid #57bd69;
+      border-left-color: transparent;
+      border-bottom-color: transparent; // 去掉可以制作标签效果
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  .secondItem {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e2e2e2;
+    cursor: pointer;
+    &:hover {
+      background: #f2f2f2;
+    }
+    .item {
+      padding: 0 16px;
+      height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left;
+      }
+      .enter {
+        color: #c2c2c2;
+        margin-right: 4px;
+        &:hover {
+          color: #999;
+        }
+      }
+    }
+  }
+  .active {
+    background: #f5f5f5;
+  }
+
+  .close {
+    position: absolute;
+    font-size: 20px;
+    bottom: 0;
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    &:hover {
+      color: #999;
+    }
+  }
+}

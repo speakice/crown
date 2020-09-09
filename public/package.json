@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "crown",
+  "version": "0.1.0",
+  "description": "个人管理",
+  "author": "jacklee<907203644@qq.com>",
+  "main": "./main.js",
+  "homepage": ".",
+  "scripts": {
+    "electron-build": "electron-packager . 皇冠 --mac --out=release --arch=x64 --app-version=1.0.0 --electron-version=9.1.2 --overwrite --icon=./dragtodo.icns"
+  }
+  
+}

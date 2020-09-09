@@ -1,0 +1,47 @@
+:global {
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  ::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
+  .react-contextmenu {
+    border: 1px solid #e2e2e2;
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 0 3px #e2e2e2;
+    margin-left: 6px;
+    z-index: 888;
+  }
+  .react-contextmenu-wrapper{
+    width: 100%;
+  }
+  .react-contextmenu-item {
+    padding: 6px 14px;
+    cursor: pointer;
+  }
+  .react-contextmenu-item:hover {
+    background-color: #e2e2e2;
+  }
+}
+
+.Index {
+  height: 100%;
+  display: flex;
+  .content {
+    flex: 1;
+    // padding: 16px;
+  }
+}
+.secondPlus {
+  font-size: 24px;
+  margin-left: 8px;
+  color: #999;
+  &:hover {
+    color: #666;
+  }
+}
