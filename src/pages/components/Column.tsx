@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from 'antd';
 import styles from './index.less';
-import { IColumn, ITask } from '../storage';
+import { IColumn, ITask } from '../../db/storage';
 import { Droppable } from 'react-beautiful-dnd';
 import Task from './Task';
 

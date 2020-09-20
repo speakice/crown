@@ -23,13 +23,13 @@ export interface IAim {
   branchs: Array<IBranch>;
 }
 
-export const newAim = (id: string) => {
-  const today = moment().format('YYYYMMDD');
+export const newAim = (momentFn: moment.Moment, id: string) => {
+  const today = momentFn.format('YYYYMMDD');
   return {
     id,
     title: today,
-    createTime: moment().valueOf(),
-    modifyTime: moment().valueOf(),
+    createTime: momentFn.valueOf(),
+    modifyTime: momentFn.valueOf(),
     sort: EAimSort.normal,
     startDate: today,
     times: 0,
@@ -39,14 +39,14 @@ export const newAim = (id: string) => {
   };
 };
 
-export const initAim = () => {
+export const initAim = (momentFn: moment.Moment) => {
   const newId = shortid.generate();
   return {
     currentId: newId,
     editId: '',
     data: [
       {
-        ...newAim(newId),
+        ...newAim(momentFn, newId),
       },
     ],
   };

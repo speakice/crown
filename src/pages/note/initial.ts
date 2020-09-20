@@ -19,12 +19,11 @@ export enum ENoteSort {
   normal = 2,
 }
 
-export const newNote = () => {
-  const newId = shortid.generate();
-  const curTime = moment().valueOf();
+export const newNote = (momentFn: moment.Moment, id: string) => {
+  const curTime = momentFn.valueOf();
   return {
-    id: newId,
-    title: moment().format('YYYYMMDD') + '日志',
+    id,
+    title: momentFn.format('YYYYMMDD') + '日志',
     createTime: curTime,
     modifyTime: curTime,
     sort: ENoteSort.normal,
@@ -33,7 +32,7 @@ export const newNote = () => {
   };
 };
 
-export const initNote = () => {
+export const initNote = (momentFn: moment.Moment) => {
   const newId = shortid.generate();
   return {
     folderId: '',
@@ -41,8 +40,7 @@ export const initNote = () => {
     editId: '',
     data: [
       {
-        ...newNote(),
-        id: newId,
+        ...newNote(momentFn, newId),
         type: EFileType.file,
       },
     ],

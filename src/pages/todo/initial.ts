@@ -1,5 +1,5 @@
-import moment from 'moment';
 import shortid from 'shortid';
+import moment from 'moment';
 
 export enum ERepeat {
   once,
@@ -57,11 +57,11 @@ export enum ESort {
   normal = 2,
 }
 
-export const newTodo = () => {
-  const curTime = moment().valueOf();
+export const newTodo = (momentFn: moment.Moment, id: string) => {
+  const curTime = momentFn.valueOf();
   return {
-    id: shortid.generate(),
-    title: moment().format('YYYYMMDD'),
+    id,
+    title: momentFn.format('YYYYMMDD'),
     createTime: curTime,
     modifyTime: curTime,
     sort: ESort.normal,
@@ -85,15 +85,14 @@ export const newTodo = () => {
   };
 };
 
-export const initTodo = () => {
+export const initTodo = (momentFn: moment.Moment) => {
   const newId = shortid.generate();
   return {
     currentId: newId,
     editId: '',
     data: [
       {
-        ...newTodo(),
-        id: newId,
+        ...newTodo(momentFn, newId),
       },
     ],
   };

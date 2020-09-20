@@ -39,6 +39,7 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-contextmenu": "^2.14.0",
     "react-dom": "^16.12.0",
+    "react-use-idb": "^1.0.2",
     "shortid": "^2.2.15",
     "umi": "^3.2.13",
     "vditor": "^3.4.5",

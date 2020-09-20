@@ -1,35 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useIdb } from 'react-use-idb';
 import moment from 'moment';
 import VEditor from '../components/VEditor';
 import SecondList, { ENoteType, EFileType } from './SecondList';
 import shortid from 'shortid';
 import styles from './index.less';
-import { saveNoteState, getNoteState } from '../storage';
 import { message } from 'antd';
-import { newNote, INote, INoteData, ENoteSort } from './initial';
+import { newNote, INote, ENoteSort, initNote } from './initial';
 import EmptyStatus from '../../../public/empty.png';
+
 interface ITypeProps {
   showSecondList: boolean;
   setShowSecondList: (visible: boolean) => void;
 }
 export default (props: ITypeProps) => {
   const { showSecondList, setShowSecondList } = props;
-  const [allNotes, setAllNotes] = useState(getNoteState());
+  const [allNotes, setAllNotes] = useIdb('note', initNote(moment()));
   const { currentId = '', editId, data = [], folderId = '' } = allNotes;
   let currentList = [...data];
-  const [currentFolder] = data.filter(item => item.id === folderId);
+  const [currentFolder] = data.filter((item: INote) => item.id === folderId);
   if (currentFolder) {
     currentList = currentFolder.folder || [];
   }
   const [currentNote] = currentList.filter(
     (item: INote) => item.id === currentId,
   );
-  // 修改本地todo 改变storage
-  const changeNoteData = (newData: INoteData) => {
-    console.log('changeNoteData', newData);
-    setAllNotes(newData);
-    saveNoteState(newData);
-  };
 
   const getDesc = (val: string = '') => {
     const clearVal = val
@@ -70,11 +65,11 @@ export default (props: ITypeProps) => {
 
       return item;
     });
-    changeNoteData({ ...allNotes, data: newDatas });
+    setAllNotes({ ...allNotes, data: newDatas });
   };
 
   const onFolderBack = () => {
-    changeNoteData({ ...allNotes, currentId: '', folderId: '' });
+    setAllNotes({ ...allNotes, currentId: '', folderId: '' });
   };
 
   const onAddNotePage = (type: EFileType, folderId?: string) => {
@@ -82,17 +77,17 @@ export default (props: ITypeProps) => {
     const newId = shortid.generate();
     if (!folderId) {
       const folder = type === EFileType.folder ? { folder: [] } : {};
-      newData.push({ ...newNote(), type, ...folder, id: newId });
+      newData.push({ ...newNote(moment(), newId), type, ...folder });
     } else {
       newData.map(item => {
         if (item.id === folderId) {
-          item.folder?.push({ ...newNote(), type, id: newId });
+          item.folder?.push({ ...newNote(moment(), newId), type });
         }
         return item;
       });
     }
     const currentId = type === EFileType.folder ? {} : { currentId: newId };
-    changeNoteData({ ...allNotes, ...currentId, editId: newId, data: newData });
+    setAllNotes({ ...allNotes, ...currentId, editId: newId, data: newData });
   };
 
   const onEditChange = (
@@ -102,28 +97,28 @@ export default (props: ITypeProps) => {
     title?: string,
   ) => {
     if (type === ENoteType.start) {
-      changeNoteData({ ...allNotes, editId: id });
+      setAllNotes({ ...allNotes, editId: id });
       return;
     }
     if (type === ENoteType.delete) {
       let newData = [...data];
       if (!folderId) {
-        newData = newData.filter(item => item.id !== id);
+        newData = newData.filter((item: INote) => item.id !== id);
       } else {
         newData = newData.map(item => {
           if (item.id === folderId) {
-            item.folder = item.folder?.filter(note => note.id !== id);
+            item.folder = item.folder?.filter((note: INote) => note.id !== id);
             item.modifyTime = moment().valueOf();
           }
           return item;
         });
       }
-      changeNoteData({ ...allNotes, data: newData });
+      setAllNotes({ ...allNotes, data: newData });
       return;
     }
     if (type === ENoteType.top) {
       console.log('noteTop', folderId, id);
-      const newData = data.map(item => {
+      const newData = data.map((item: INote) => {
         if (!folderId) {
           if (item.id === id) {
             item.sort =
@@ -132,7 +127,7 @@ export default (props: ITypeProps) => {
           }
         } else {
           if (item.id === folderId) {
-            item.folder = item.folder?.map(note => {
+            item.folder = item.folder?.map((note: INote) => {
               if (note.id === id) {
                 note.sort =
                   note.sort === ENoteSort.top
@@ -148,7 +143,7 @@ export default (props: ITypeProps) => {
         return item;
       });
       console.log('noteTop', ENoteSort.top, folderId, id, newData);
-      changeNoteData({ ...allNotes, editId: '', data: newData });
+      setAllNotes({ ...allNotes, editId: '', data: newData });
       return;
     }
     if (type === ENoteType.rename) {
@@ -156,7 +151,7 @@ export default (props: ITypeProps) => {
         message.error('标题不能为空');
         return;
       }
-      const newData = data.map(item => {
+      const newData = data.map((item: INote) => {
         if (!folderId) {
           if (item.id === id) {
             item.title = title;
@@ -164,7 +159,7 @@ export default (props: ITypeProps) => {
           }
         } else {
           if (item.id === folderId) {
-            item.folder = item.folder?.map(note => {
+            item.folder = item.folder?.map((note: INote) => {
               if (note.id === id) {
                 note.title = title;
                 note.modifyTime = moment().valueOf();
@@ -176,11 +171,9 @@ export default (props: ITypeProps) => {
         }
         return item;
       });
-      changeNoteData({ ...allNotes, editId: '', data: newData });
+      setAllNotes({ ...allNotes, editId: '', data: newData });
     }
   };
-
-  console.log('currentNote', currentNote, currentList);
   return (
     <div className={styles.Note}>
       {showSecondList && (
@@ -192,9 +185,7 @@ export default (props: ITypeProps) => {
           onFolderBack={onFolderBack}
           editId={editId}
           onEditChange={onEditChange}
-          onChange={data =>
-            changeNoteData({ ...allNotes, ...data, editId: '' })
-          }
+          onChange={data => setAllNotes({ ...allNotes, ...data, editId: '' })}
           onAdd={onAddNotePage}
           setShowSecondList={setShowSecondList}
         />

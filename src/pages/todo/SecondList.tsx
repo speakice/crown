@@ -8,7 +8,7 @@ import {
 import styles from './index.less';
 import { ITodo, ESort } from './initial';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
-import { saveTodoState, saveNoteState, saveAimState } from '../storage';
+import { saveTodoState, saveNoteState, saveAimState } from '../../db/storage';
 
 export enum ETodoType {
   start, // 开始编辑title

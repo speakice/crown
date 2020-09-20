@@ -4,7 +4,7 @@ import { message } from 'antd';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { history } from 'umi';
 import styles from './index.less';
-import { getAppData } from '../storage';
+import { getAppData } from '../../db/storage';
 
 interface IMenu {
   id: string;

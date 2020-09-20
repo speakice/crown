@@ -18,8 +18,10 @@
   "include": [
     "mock/**/*",
     "src/**/*",
+    "db/**/*",
     "config/**/*",
     ".umirc.ts",
-    "typings.d.ts", "public/dist"
+    "typings.d.ts",
+    "public/dist"
   ]
 }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import styles from './index.less';
 import { IColumn, ITask, EStatus, ERate, ERepeat } from './initial';
-import { getTodoState, saveTodoState } from '../storage';
+import { getTodoState, saveTodoState } from '../../db/storage';
 import shortid from 'shortid';
 import {
   DragDropContext,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './index.less';
-import { ITask } from '../storage';
+import { ITask } from '../../db/storage';
 import { Draggable } from 'react-beautiful-dnd';
 import { Rate } from 'antd';
 
