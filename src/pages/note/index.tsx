@@ -174,6 +174,12 @@ export default (props: ITypeProps) => {
       setAllNotes({ ...allNotes, editId: '', data: newData });
     }
   };
+
+  const handleSearch = (val: string) => {
+    const { note } = JSON.parse(val || '{}');
+    if (note) setAllNotes(note);
+  };
+
   return (
     <div className={styles.Note}>
       {showSecondList && (
@@ -181,6 +187,7 @@ export default (props: ITypeProps) => {
           list={currentList}
           folderId={folderId}
           currentId={currentId}
+          handleSearch={handleSearch}
           currentFolder={currentFolder}
           onFolderBack={onFolderBack}
           editId={editId}

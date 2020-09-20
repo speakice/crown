@@ -21,6 +21,7 @@ interface IPropsType {
   editId: string;
   list: Array<IAim>;
   onChange: (id: string) => void;
+  handleSearch: (str: string) => void;
   onEditChange: (type: EAimType, id: string, title?: string) => void;
   onAdd: () => void;
   setShowSecondList: (Visible: boolean) => void;
@@ -32,6 +33,7 @@ export default (props: IPropsType) => {
     currentId,
     editId,
     onEditChange,
+    handleSearch,
     onChange,
     onAdd,
     setShowSecondList,
@@ -73,7 +75,10 @@ export default (props: IPropsType) => {
   return (
     <div className={styles.SecondList}>
       <div className={styles.search}>
-        <Input placeholder="关键字，回车搜索" />
+        <Input
+          placeholder="关键字，回车搜索"
+          onPressEnter={e => handleSearch((e.target as HTMLInputElement).value)}
+        />
         <PlusCircleOutlined
           style={{ fontSize: 24, marginLeft: 8, color: '#c2c2c2' }}
           onClick={onAdd}

@@ -72,6 +72,11 @@ export default (props: ITypeProps) => {
     }
   };
 
+  const handleSearch = (val: string) => {
+    const { todo } = JSON.parse(val || '{}');
+    if (todo) setAllTodos(todo);
+  };
+
   return (
     <div className={styles.Todo}>
       {showSecondList && (
@@ -79,6 +84,7 @@ export default (props: ITypeProps) => {
           list={data}
           currentId={currentId}
           editId={editId}
+          handleSearch={handleSearch}
           onEditChange={onEditChange}
           onChange={currentId => setAllTodos({ ...allTodos, currentId })}
           onAdd={onAddTodoPage}

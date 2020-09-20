@@ -87,6 +87,10 @@ export default (props: ITypeProps) => {
       setAllAims({ ...allAims, editId: '', data: newData });
     }
   };
+  const handleSearch = (val: string) => {
+    const { aim } = JSON.parse(val || '{}');
+    if (aim) setAllAims(aim);
+  };
 
   return (
     <div className={styles.Aim}>
@@ -95,6 +99,7 @@ export default (props: ITypeProps) => {
           list={data}
           currentId={currentId}
           editId={editId}
+          handleSearch={handleSearch}
           onEditChange={onEditChange}
           onChange={currentId => setAllAims({ ...allAims, currentId })}
           onAdd={onAddAimPage}

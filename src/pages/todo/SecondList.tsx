@@ -22,36 +22,24 @@ interface IPropsType {
   editId: string;
   list: Array<ITodo>;
   onChange: (id: string) => void;
+  handleSearch: (str: string) => void;
   onEditChange: (type: ETodoType, id: string, title?: string) => void;
   onAdd: () => void;
   setShowSecondList: (visible: boolean) => void;
 }
 
 export default (props: IPropsType) => {
-  const [searchInput, setSearchInput] = useState('');
   const {
     list = [],
     currentId,
     editId,
     onEditChange,
+    handleSearch,
     onChange,
     onAdd,
     setShowSecondList,
   } = props;
-  const handleSearch = (val: string = '') => {
-    if (!val) return;
-    const jsonObj = JSON.parse(val);
-    if (jsonObj.todo) {
-      saveTodoState(jsonObj.todo);
-    }
-    if (jsonObj.note) {
-      saveNoteState(jsonObj.note);
-    }
-    if (jsonObj.aim) {
-      saveAimState(jsonObj.aim);
-    }
-    setSearchInput('');
-  };
+
   const handleMenuClick = (
     e: TouchEvent,
     data: { id: string; type: string },
@@ -88,9 +76,7 @@ export default (props: IPropsType) => {
     <div className={styles.SecondList}>
       <div className={styles.search}>
         <Input
-          value={searchInput}
           placeholder="关键字，回车搜索"
-          onChange={e => setSearchInput(e.target.value)}
           onPressEnter={e => handleSearch((e.target as HTMLInputElement).value)}
         />
         <PlusCircleOutlined
@@ -138,7 +124,7 @@ export default (props: IPropsType) => {
                 data={{ id: item.id, type: 'top' }}
                 onClick={handleMenuClick}
               >
-                {item.sort === ESort.top?'取消置顶':'置顶'}
+                {item.sort === ESort.top ? '取消置顶' : '置顶'}
               </MenuItem>
               <MenuItem
                 data={{ id: item.id, type: 'rename' }}

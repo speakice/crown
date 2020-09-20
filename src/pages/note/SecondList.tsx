@@ -31,6 +31,7 @@ interface IPropsType {
   editId: string;
   list: Array<INote>;
   onChange: (data: { currentId: string; folderId?: string }) => void;
+  handleSearch: (str: string) => void;
   onEditChange: (
     type: ENoteType,
     id: string,
@@ -50,6 +51,7 @@ export default (props: IPropsType) => {
     folderId,
     currentFolder,
     onEditChange,
+    handleSearch,
     onFolderBack,
     onChange,
     onAdd,
@@ -104,7 +106,10 @@ export default (props: IPropsType) => {
   return (
     <div className={styles.SecondList}>
       <div className={styles.search}>
-        <Input placeholder="关键字，回车搜索" />
+        <Input
+          placeholder="关键字，回车搜索"
+          onPressEnter={e => handleSearch((e.target as HTMLInputElement).value)}
+        />
         <Popover
           mouseLeaveDelay={0.5}
           overlayStyle={{ marginLeft: 12 }}
