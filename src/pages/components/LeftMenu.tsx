@@ -35,7 +35,7 @@ export default (props: IPropsType) => {
   return (
     <div className={styles.LeftMenu}>
       <CopyToClipboard
-        text={JSON.stringify(getAppData())}
+        text="暂不支持"
         onCopy={() => message.success('复制成功')}
       >
         <img className={styles.logo} src={icon} />
