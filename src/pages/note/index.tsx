@@ -15,7 +15,9 @@ interface ITypeProps {
 }
 export default (props: ITypeProps) => {
   const { showSecondList, setShowSecondList } = props;
-  const [allNotes, setAllNotes] = useIdb('note', initNote(moment()));
+  const newId = shortid.generate();
+  const initNotes = initNote(newNote(moment(), newId), newId);
+  const [allNotes, setAllNotes] = useIdb('note', initNotes);
   const { currentId = '', editId, data = [], folderId = '' } = allNotes;
   let currentList = [...data];
   const [currentFolder] = data.filter((item: INote) => item.id === folderId);
@@ -39,7 +41,7 @@ export default (props: ITypeProps) => {
     if (clearVal.length < 14) {
       return clearVal;
     }
-    return clearVal.substring(0, 14);
+    return clearVal.substring(0, 18);
   };
   const changeCurrentNote = (val: string) => {
     const newDatas = data.map((item: INote) => {

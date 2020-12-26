@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Vditor from 'vditor';
+// import { ipcRenderer } from 'electron';
+import { saveAs } from 'file-saver';
 import hljs from 'hljs';
 import { AlignLeftOutlined } from '@ant-design/icons';
 import { INote } from '@/pages/note/initial';
@@ -16,9 +18,6 @@ export default (props: IPropsType) => {
   const { onSave, data } = props;
   const { id, content } = data;
   useEffect(() => {
-    if (vditor) {
-      vditor.destroy();
-    }
     vditor = new Vditor('vditor', {
       placeholder: '欢迎是使用笔记本',
       toolbar: [],
@@ -27,7 +26,7 @@ export default (props: IPropsType) => {
         hide: false,
       },
       counter: { enable: false },
-      cdn: '.', // 'https://cdn.jsdelivr.net/npm/vditor@${VDITOR_VERSION}',
+      cdn: 'https://cdn.jsdelivr.net/npm/vditor', // '.'
       mode: 'ir', // 'ir',
       theme: 'classic', // 'dark',
       icon: 'ant', // 'material',
@@ -48,9 +47,31 @@ export default (props: IPropsType) => {
       value: content,
       blur: onSave,
       input: (value: string) => {},
-      upload: {},
+      upload: {
+        accept: 'image/*',
+        token: 'test',
+        url: '/api/upload/editor',
+        linkToImgUrl: '/api/upload/fetch',
+        linkToImgCallback: response => {
+          console.log('response', response);
+        },
+        handler(files) {
+          console.log(files);
+          const [firstFile] = files;
+          // ipcRenderer.send('open-file-dialog');
+          saveAs(firstFile, 'firstFile.png');
+          return null;
+        },
+        withCredentials: true,
+        filename(name) {
+          return name
+            .replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, '')
+            .replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, '')
+            .replace('/\\s/g', '');
+        },
+      },
       after() {
-        vditor.setValue(content);
+        // vditor.setValue(content);
       },
     });
     // vditor.setTheme('dark');

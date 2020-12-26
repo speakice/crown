@@ -22,6 +22,6 @@
     "config/**/*",
     ".umirc.ts",
     "typings.d.ts",
-    "public/dist"
+    "public/dist2"
   ]
 }

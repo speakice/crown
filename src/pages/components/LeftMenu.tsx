@@ -4,7 +4,6 @@ import { message } from 'antd';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { history } from 'umi';
 import styles from './index.less';
-import { getAppData } from '../../db/storage';
 
 interface IMenu {
   id: string;
@@ -34,10 +33,7 @@ export default (props: IPropsType) => {
 
   return (
     <div className={styles.LeftMenu}>
-      <CopyToClipboard
-        text={JSON.stringify(getAppData())}
-        onCopy={() => message.success('复制成功')}
-      >
+      <CopyToClipboard text={''} onCopy={() => message.success('复制成功')}>
         <img className={styles.logo} src={icon} />
       </CopyToClipboard>
       {menus.map(menu => {

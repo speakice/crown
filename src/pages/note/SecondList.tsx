@@ -191,7 +191,7 @@ export default (props: IPropsType) => {
                 <div className={styles.item}>
                   {itemTitle}
                   {item.type === EFileType.file && item.desc && (
-                    <div className={styles.desc}>{item.desc}...</div>
+                    <div className={styles.desc}>{item.desc}</div>
                   )}
                 </div>
               </ContextMenuTrigger>

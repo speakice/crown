@@ -2,6 +2,8 @@
 
 ## Getting Started
 
+![todo]('./screenshot/todo.jpg')
+
 Install dependencies,
 
 ```bash

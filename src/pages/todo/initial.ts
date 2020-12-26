@@ -58,6 +58,7 @@ export enum ESort {
 }
 
 export const newTodo = (momentFn: moment.Moment, id: string) => {
+  console.log('momentFn', momentFn, id);
   const curTime = momentFn.valueOf();
   return {
     id,
@@ -85,15 +86,10 @@ export const newTodo = (momentFn: moment.Moment, id: string) => {
   };
 };
 
-export const initTodo = (momentFn: moment.Moment) => {
-  const newId = shortid.generate();
+export const initTodo = (newTodo: ITodo, newId: string) => {
   return {
     currentId: newId,
     editId: '',
-    data: [
-      {
-        ...newTodo(momentFn, newId),
-      },
-    ],
+    data: [newTodo],
   };
 };

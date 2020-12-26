@@ -16,7 +16,9 @@ interface ITypeProps {
 
 export default (props: ITypeProps) => {
   const { showSecondList, setShowSecondList } = props;
-  const [allTodos, setAllTodos] = useIdb('todo', initTodo(moment()));
+  const newId = shortid.generate();
+  const initTodos = initTodo(newTodo(moment(), newId), newId);
+  const [allTodos, setAllTodos] = useIdb('todo', initTodos);
   const { currentId = '', editId, data = [] } = allTodos || {};
   const [currentTodo] = data.filter((item: ITodo) => item.id === currentId);
 
@@ -76,7 +78,6 @@ export default (props: ITypeProps) => {
     const { todo } = JSON.parse(val || '{}');
     if (todo) setAllTodos(todo);
   };
-
   return (
     <div className={styles.Todo}>
       {showSecondList && (

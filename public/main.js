@@ -1,18 +1,24 @@
 const electron = require('electron');
 // 控制应用生命周期的模块
-const { app } = electron;
+const { app, dialog, ipcMain } = electron;
 // 创建本地浏览器窗口的模块
 const { BrowserWindow } = electron;
 
 // 指向窗口对象的一个全局引用，如果没有这个引用，那么当该javascript对象被垃圾回收的
 // 时候该窗口将会自动关闭
 let win;
-const Menu = electron.Menu
+const Menu = electron.Menu;
 function createWindow() {
   // 隐藏菜单栏
-  Menu.setApplicationMenu(null)
+  Menu.setApplicationMenu(null);
   // 创建一个新的浏览器窗口
-  win = new BrowserWindow({ width: 1920, height: 1080, resizable: false, allowRunningInsecureContent: true, experimentalCanvasFeatures: true});
+  win = new BrowserWindow({
+    width: 1920,
+    height: 1080,
+    resizable: false,
+    allowRunningInsecureContent: true,
+    experimentalCanvasFeatures: true,
+  });
 
   // 并且装载应用的index.html页面
   win.loadURL(`file://${__dirname}/index.html`);
@@ -54,3 +60,24 @@ app.on('activate', () => {
 
 // 在这个文件后面你可以直接包含你应用特定的由主进程运行的代码。
 // 也可以把这些代码放在另一个文件中然后在这里导入。
+ipcMain.on('open-file-dialog', function(event) {
+  dialog.showSaveDialog(
+    {
+      title: 'save file',
+      defaultPath: 'aaa.jpg',
+      filters: [
+        { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
+        { name: 'Movies', extensions: ['mkv', 'avi', 'mp4'] },
+        { name: 'Custom File Type', extensions: ['as'] },
+        { name: 'All Files', extensions: ['*'] },
+      ],
+    },
+    function(path) {
+      console.log(path);
+      alert('path:' + path);
+      // C:\Users\Administrator\Desktop\新建文件夹\js\aaa.jpg
+
+      //保存以后会打印保存的路径  , 但是不会实现真的保存功能  （具体保存什么数据可以写在nodejs里面）
+    },
+  );
+});

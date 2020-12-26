@@ -27,23 +27,18 @@ export const newNote = (momentFn: moment.Moment, id: string) => {
     createTime: curTime,
     modifyTime: curTime,
     sort: ENoteSort.normal,
+    type: EFileType.file,
     desc: '',
     content: '',
   };
 };
 
-export const initNote = (momentFn: moment.Moment) => {
-  const newId = shortid.generate();
+export const initNote = (newNote: INote, newId: string) => {
   return {
     folderId: '',
     currentId: newId,
     editId: '',
-    data: [
-      {
-        ...newNote(momentFn, newId),
-        type: EFileType.file,
-      },
-    ],
+    data: [newNote],
   };
 };
 

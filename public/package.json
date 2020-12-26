@@ -7,7 +7,7 @@
   "main": "./main.js",
   "homepage": ".",
   "scripts": {
-    "electron-build": "electron-packager . 皇冠 --mac --out=release --arch=x64 --app-version=1.0.0 --electron-version=9.1.2 --overwrite --icon=./dragtodo.icns"
+    "electron-build": "electron-packager . 皇冠2 --mac --out=release --arch=x64 --app-version=1.0.0 --electron-version=9.1.2 --overwrite --icon=./dragtodo.icns"
   }
   
 }

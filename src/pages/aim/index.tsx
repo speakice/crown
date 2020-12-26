@@ -16,7 +16,9 @@ interface ITypeProps {
 
 export default (props: ITypeProps) => {
   const { showSecondList, setShowSecondList } = props;
-  const [allAims, setAllAims] = useIdb('aim', initAim(moment()));
+  const newId = shortid.generate();
+  const initAims = initAim(newAim(moment(), newId), newId);
+  const [allAims, setAllAims] = useIdb('aim', initAims);
   const { currentId = '', editId, data = [] } = allAims;
   const [currentAim] = data.filter((item: IAim) => item.id === currentId);
 

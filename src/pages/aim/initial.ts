@@ -39,16 +39,11 @@ export const newAim = (momentFn: moment.Moment, id: string) => {
   };
 };
 
-export const initAim = (momentFn: moment.Moment) => {
-  const newId = shortid.generate();
+export const initAim = (newAim: IAim, newId: string) => {
   return {
     currentId: newId,
     editId: '',
-    data: [
-      {
-        ...newAim(momentFn, newId),
-      },
-    ],
+    data: [newAim],
   };
 };
 
