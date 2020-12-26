@@ -33,7 +33,10 @@ export default (props: IPropsType) => {
 
   return (
     <div className={styles.LeftMenu}>
-      <CopyToClipboard text={''} onCopy={() => message.success('复制成功')}>
+      <CopyToClipboard
+        text="暂不支持"
+        onCopy={() => message.success('复制成功')}
+      >
         <img className={styles.logo} src={icon} />
       </CopyToClipboard>
       {menus.map(menu => {

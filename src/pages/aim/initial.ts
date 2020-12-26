@@ -23,7 +23,7 @@ export interface IAim {
   branchs: Array<IBranch>;
 }
 
-export const newAim = (momentFn: moment.Moment, id: string) => {
+export const newAim = (momentFn: moment.Moment = moment(), id: string) => {
   const today = momentFn.format('YYYYMMDD');
   return {
     id,
@@ -39,7 +39,8 @@ export const newAim = (momentFn: moment.Moment, id: string) => {
   };
 };
 
-export const initAim = (newAim: IAim, newId: string) => {
+export const initAim = (momentFn: moment.Moment = moment()) => {
+  const newId = shortid.generate();
   return {
     currentId: newId,
     editId: '',
